@@ -1,12 +1,17 @@
 const axios = require("axios");
 
-const { BASE_URL, ENDPOINT, PARAMETER } = require("../constants/constants");
+const { BASE_URL, ENDPOINT, REQUIRED_PARAMETERS } = require("../constants/constants");
 const validate = require("../utils/validate");
 
-const REQUIRED_PARAMETERS = [PARAMETER.PLAYER_NAME];
+const requiredParameters = REQUIRED_PARAMETERS[ENDPOINT.SEARCH_PLAYER];
+
+const getUrl = (playerName) => {
+  const playerNameParameter = playerName.replace(" ", "%20");
+  return `${BASE_URL}${ENDPOINT.SEARCH_PLAYERS_BY_NAME}?playername=${playerNameParameter}`;
+};
 
 const searchPlayer = async (req, res) => {
-  const validationResponse = validate(req, REQUIRED_PARAMETERS);
+  const validationResponse = validate(req, requiredParameters);
   if (!validationResponse.isValid) {
     return res.status(400).json({
       error: validationResponse.error,
@@ -14,12 +19,7 @@ const searchPlayer = async (req, res) => {
   }
   const url = getUrl(req.body.playerName);
   const response = await axios.get(url);
-  res.send(response.data);
-};
-
-const getUrl = (playerName) => {
-  const playerNameParameter = playerName.replace(" ", "%20");
-  return `${BASE_URL}${ENDPOINT.SEARCH_PLAYER_BY_NAME}?playername=${playerNameParameter}`;
+  return res.send(response.data);
 };
 
 module.exports = searchPlayer;

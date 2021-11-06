@@ -4,14 +4,23 @@
   "repository": "https://github.com/dmoini/futbin-api-server",
   "license": "MIT",
   "author": "Donovan Moini <donovanmoini@gmail.com>",
-  "main": "app.js",
+  "main": "index.js",
   "scripts": {
-    "start": "node app.js"
+    "lint": "eslint .",
+    "start": "node index.js",
+    "test": "jest"
   },
   "dependencies": {
     "axios": "^0.24.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "is-number": "^7.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.25.2",
+    "jest": "^27.3.1",
+    "supertest": "^6.1.6"
   }
 }

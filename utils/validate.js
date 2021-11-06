@@ -1,25 +1,8 @@
 const isNumber = require("is-number");
 const { ERROR_MESSAGE, PARAMETER, VALID_PLATFORMS } = require("../constants/constants");
 
-const validate = (request, requiredParameters) => {
-  const requiredParametersValidationResponse = validateRequiredParameters(request, requiredParameters);
-  if (!requiredParametersValidationResponse.isValid) {
-    return requiredParametersValidationResponse;
-  }
-
-  for (const parameter of requiredParameters) {
-    const parameterValue = request.body[parameter];
-    const parameterValidationMethod = parameterToValidationMethodMap[parameter];
-    const parameterValidationResponse = parameterValidationMethod(parameterValue);
-    if (!parameterValidationResponse.isValid) {
-      return parameterValidationResponse;
-    }
-  }
-  return { isValid: true, error: "" };
-};
-
 const validateRequiredParameters = (request, requiredParameters) => {
-  const missingParameters = requiredParameters.filter((parameter) => !request.body.hasOwnProperty(parameter));
+  const missingParameters = requiredParameters.filter((parameter) => !Object.prototype.hasOwnProperty.call(request.body, parameter));
   const isValid = missingParameters.length === 0;
   return {
     isValid,
@@ -44,7 +27,7 @@ const validatePlatform = (platform) => {
 };
 
 const validateResourceId = (resourceId) => {
-  const isValid = isNumber(resourceId) && parseInt(resourceId) > 0 && parseInt(resourceId) % 1 == 0;
+  const isValid = isNumber(resourceId) && parseInt(resourceId, 10) > 0 && parseInt(resourceId, 10) % 1 === 0;
   return {
     isValid,
     error: isValid ? "" : ERROR_MESSAGE.INVALID_RESOURCE_ID,
@@ -68,6 +51,27 @@ const parameterToValidationMethodMap = {
   [PARAMETER.PLAYER_NAME]: validatePlayerName,
   [PARAMETER.RESOURCE_ID]: validateResourceId,
   [PARAMETER.RESOURCE_IDS]: validateResourceIds,
+};
+
+const validate = (request, requiredParameters) => {
+  const requiredParametersValidationResponse = validateRequiredParameters(request, requiredParameters);
+  if (!requiredParametersValidationResponse.isValid) {
+    return requiredParametersValidationResponse;
+  }
+
+  const invalidParameterValidationResponses = requiredParameters
+    .map((parameter) => {
+      const parameterValue = request.body[parameter];
+      const parameterValidationMethod = parameterToValidationMethodMap[parameter];
+      return parameterValidationMethod(parameterValue);
+    })
+    .filter((validationResponse) => !validationResponse.isValid);
+
+  const isValid = invalidParameterValidationResponses.length === 0;
+  return {
+    isValid,
+    error: isValid ? "" : invalidParameterValidationResponses[0].error,
+  };
 };
 
 module.exports = validate;
