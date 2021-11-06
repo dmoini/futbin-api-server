@@ -14,6 +14,7 @@ const getPlayerPrice = async (req, res) => {
       error: validationResponse.error,
     });
   }
+
   const { resourceId, platform } = req.body;
   const url = getUrl(resourceId, platform);
   const response = await axios.get(url);

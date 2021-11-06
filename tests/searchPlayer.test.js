@@ -6,15 +6,15 @@ const app = require("../server");
 const { ENDPOINT, ERROR_MESSAGE, REQUIRED_PARAMETERS } = require("../constants/constants");
 const mockData = require("./mock/searchPlayer");
 
-const incorrectParametersBody = {
-  incorrectParameterKey: "incorrectParameterValue",
+const invalidParametersBody = {
+  invalidParameterKey: "invalidParameterValue",
 };
 
 jest.mock("axios");
 
 describe("GET /searchPlayer", () => {
   describe("valid requests", () => {
-    it("should return a 200 response", async () => {
+    it("should return 200 response when given valid parameters", async () => {
       axios.get.mockResolvedValue(mockData);
 
       const body = {
@@ -36,38 +36,46 @@ describe("GET /searchPlayer", () => {
 });
 
 describe("invalid requests", () => {
-  const requiredParameters = REQUIRED_PARAMETERS[ENDPOINT.SEARCH_PLAYER];
+  describe("invalid parameter keys", () => {
+    const requiredParameters = REQUIRED_PARAMETERS[ENDPOINT.SEARCH_PLAYER];
+    const expectedErrorMessage = ERROR_MESSAGE.getRequiredParametersErrorMessage(requiredParameters);
 
-  it("should return 400 with no parameters", async () => {
-    await supertest(app)
-      .get(ENDPOINT.SEARCH_PLAYER)
-      .expect(400)
-      .then((response) => {
-        expect(response.body).toHaveProperty("error");
-        const expectedErrorMessage = ERROR_MESSAGE.getRequiredParametersErrorMessage(requiredParameters);
-        expect(response.body.error).toBe(expectedErrorMessage);
-      });
+    it("should return 400 response when given no parameters", async () => {
+      await supertest(app)
+        .get(ENDPOINT.SEARCH_PLAYER)
+        .expect(400)
+        .then((response) => {
+          expect(response.body).toHaveProperty("error");
+          expect(response.body.error).toBe(expectedErrorMessage);
+        });
+    });
+
+    it("should return 400 response when given invalid parameters", async () => {
+      await supertest(app)
+        .get(ENDPOINT.SEARCH_PLAYER)
+        .send(invalidParametersBody)
+        .expect(400)
+        .then((response) => {
+          expect(response.body).toHaveProperty("error");
+          expect(response.body.error).toBe(expectedErrorMessage);
+        });
+    });
   });
 
-  it("should return 400 with incorrect parameters", async () => {
-    await supertest(app)
-      .get(ENDPOINT.SEARCH_PLAYER)
-      .send(incorrectParametersBody)
-      .expect(400)
-      .then((response) => {
-        expect(response.body).toHaveProperty("error");
-        const expectedErrorMessage = ERROR_MESSAGE.getRequiredParametersErrorMessage(requiredParameters);
-        expect(response.body.error).toBe(expectedErrorMessage);
-      });
-  });
+  describe("invalid parameter values", () => {
+    it("should return 400 response when 'playerName' is too short", async () => {
+      const body = {
+        playerName: "a",
+      };
 
-  it("should return 400 with parameter 'playerName' too short", async () => {
-    await supertest(app)
-      .get(ENDPOINT.SEARCH_PLAYER)
-      .send({ playerName: "a" })
-      .expect(400)
-      .then((response) => {
-        expect(response.body.error).toBe(ERROR_MESSAGE.PLAYER_NAME_TOO_SHORT);
-      });
+      await supertest(app)
+        .get(ENDPOINT.SEARCH_PLAYER)
+        .send(body)
+        .expect(400)
+        .then((response) => {
+          expect(response.body).toHaveProperty("error");
+          expect(response.body.error).toBe(ERROR_MESSAGE.PLAYER_NAME_TOO_SHORT);
+        });
+    });
   });
 });

@@ -17,6 +17,7 @@ const searchPlayer = async (req, res) => {
       error: validationResponse.error,
     });
   }
+
   const url = getUrl(req.body.playerName);
   const response = await axios.get(url);
   return res.send(response.data);

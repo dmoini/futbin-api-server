@@ -1,5 +1,5 @@
 const isNumber = require("is-number");
-const { ERROR_MESSAGE, PARAMETER, VALID_PLATFORMS } = require("../constants/constants");
+const { ERROR_MESSAGE, PARAMETER, PLATFORM } = require("../constants/constants");
 
 const validateRequiredParameters = (request, requiredParameters) => {
   const missingParameters = requiredParameters.filter((parameter) => !Object.prototype.hasOwnProperty.call(request.body, parameter));
@@ -19,7 +19,7 @@ const validatePlayerName = (playerName) => {
 };
 
 const validatePlatform = (platform) => {
-  const isValid = VALID_PLATFORMS.includes(platform);
+  const isValid = Object.values(PLATFORM).includes(platform);
   return {
     isValid,
     error: isValid ? "" : ERROR_MESSAGE.INVALID_PLATFORM,
@@ -27,7 +27,7 @@ const validatePlatform = (platform) => {
 };
 
 const validateResourceId = (resourceId) => {
-  const isValid = isNumber(resourceId) && parseInt(resourceId, 10) > 0 && parseInt(resourceId, 10) % 1 === 0;
+  const isValid = isNumber(resourceId) && +resourceId > 0 && +resourceId % 1 === 0;
   return {
     isValid,
     error: isValid ? "" : ERROR_MESSAGE.INVALID_RESOURCE_ID,

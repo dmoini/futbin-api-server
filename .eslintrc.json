@@ -15,6 +15,7 @@
         "max-len": ["error", {
             "code": 140
         }],
+        "object-curly-newline": "off",
         "quotes": "off"
     }
 }
