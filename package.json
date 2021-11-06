@@ -1,0 +1,17 @@
+{
+  "name": "futbin-api-server",
+  "version": "1.0.0",
+  "repository": "https://github.com/dmoini/futbin-api-server",
+  "license": "MIT",
+  "author": "Donovan Moini <donovanmoini@gmail.com>",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "axios": "^0.24.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "is-number": "^7.0.0"
+  }
+}
