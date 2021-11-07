@@ -2,9 +2,9 @@
 
 const supertest = require("supertest");
 const axios = require("axios");
-const app = require("../server");
-const mockData = require("./mock/searchPlayer");
-const { ENDPOINT, ERROR_MESSAGE, PARAMETER, REQUIRED_PARAMETERS } = require("../constants/constants");
+const app = require("@src/server");
+const mockData = require("@mock/searchPlayer");
+const { ENDPOINT, ERROR_MESSAGE, PARAMETER, REQUIRED_PARAMETERS } = require("@constants/constants");
 
 const invalidParametersBody = {
   invalidParameterKey: "invalidParameterValue",

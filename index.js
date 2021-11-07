@@ -1,6 +1,6 @@
 /* eslint no-console: "off" */
 
-const app = require("./server");
+const app = require("@src/server");
 
 const port = process.env.port || 3000;
 

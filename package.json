@@ -8,7 +8,7 @@
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
-    "start": "node index.js",
+    "start": "babel-node index.js",
     "test": "jest"
   },
   "dependencies": {
@@ -19,8 +19,12 @@
     "isobject": "^4.0.0"
   },
   "devDependencies": {
+    "@babel/node": "^7.16.0",
+    "babel-eslint": "^10.1.0",
+    "babel-plugin-module-resolver": "^4.1.0",
     "eslint": "^7.32.0",
     "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-import-resolver-babel-module": "^5.3.1",
     "eslint-plugin-import": "^2.25.2",
     "jest": "^27.3.1",
     "supertest": "^6.1.6"

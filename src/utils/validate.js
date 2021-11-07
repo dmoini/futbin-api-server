@@ -1,5 +1,5 @@
 const isNumber = require("is-number");
-const { ERROR_MESSAGE, PARAMETER, PLATFORM } = require("../constants/constants");
+const { ERROR_MESSAGE, PARAMETER, PLATFORM } = require("@constants/constants");
 
 const validateRequiredParameters = (request, requiredParameters) => {
   const missingParameters = requiredParameters.filter((parameter) => !Object.prototype.hasOwnProperty.call(request.body, parameter));

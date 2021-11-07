@@ -1,0 +1,15 @@
+{
+    "plugins": [
+      ["module-resolver", {
+        "root": ["./src"],
+        "alias": {
+          "@constants": "./src/constants",
+          "@mock": "./tests/mock",
+          "@routes": "./src/routes",
+          "@src": "./src",
+          "@test": "./test",
+          "@utils": "./src/utils"
+        }
+      }]
+    ]
+  }

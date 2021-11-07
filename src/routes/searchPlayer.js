@@ -1,7 +1,7 @@
 const axios = require("axios");
 
-const { BASE_URL, ENDPOINT, REQUIRED_PARAMETERS } = require("../constants/constants");
-const validate = require("../utils/validate");
+const { BASE_URL, ENDPOINT, REQUIRED_PARAMETERS } = require("@constants/constants");
+const validate = require("@utils/validate");
 
 const requiredParameters = REQUIRED_PARAMETERS[ENDPOINT.SEARCH_PLAYER];
 

@@ -3,9 +3,9 @@
 const supertest = require("supertest");
 const axios = require("axios");
 const isObject = require("isobject");
-const app = require("../server");
-const { ENDPOINT, ERROR_MESSAGE, PARAMETER, PLATFORM, REQUIRED_PARAMETERS } = require("../constants/constants");
-const { mockDataA, mockDataB, noDataMockData } = require("./mock/batchGetPlayerPrice");
+const app = require("@src/server");
+const { mockDataA, mockDataB, noDataMockData } = require("@mock/batchGetPlayerPrice");
+const { ENDPOINT, ERROR_MESSAGE, PARAMETER, PLATFORM, REQUIRED_PARAMETERS } = require("@constants/constants");
 
 const invalidParametersBody = {
   invalidParameterKey: "invalidParameterValue",
