@@ -2,6 +2,8 @@
 
 ## searchPlayer
 
+---
+
 ### Parameters
 
 - `playerName`: String for player name to be searched for.
