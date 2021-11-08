@@ -16,7 +16,8 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "is-number": "^7.0.0",
-    "isobject": "^4.0.0"
+    "isobject": "^4.0.0",
+    "marked": "^4.0.0"
   },
   "devDependencies": {
     "@babel/node": "^7.16.0",

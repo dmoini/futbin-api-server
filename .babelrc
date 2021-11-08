@@ -7,7 +7,7 @@
           "@mock": "./tests/mock",
           "@routes": "./src/routes",
           "@src": "./src",
-          "@test": "./test",
+          "@tests": "./tests",
           "@utils": "./src/utils"
         }
       }]
