@@ -12,6 +12,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "@babel/node": "^7.16.0",
     "axios": "^0.24.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
@@ -20,7 +21,6 @@
     "markdown-it": "^12.2.0"
   },
   "devDependencies": {
-    "@babel/node": "^7.16.0",
     "babel-eslint": "^10.1.0",
     "babel-plugin-module-resolver": "^4.1.0",
     "eslint": "^7.32.0",
